@@ -1,0 +1,39 @@
+from pybricks.hubs import PrimeHub
+from pybricks.parameters import Color 
+from pybricks.tools import wait, run_task, multitask
+
+#Initialize the hu
+hub = PrimeHub()
+
+#Changes the color according to the volume and beat
+async def colors():
+    hub.light.blink(Color.CYAN, [200,200])
+    await wait(1000) 
+    hub.light.blink(Color.GREEN, [200,200])
+    await wait(1000)
+    hub.light.blink(Color.YELLOW, [200,200])
+    await wait(1000)
+    hub.light.blink(Color.MAGENTA, [200,200])
+    await wait(1000)
+    hub.light.blink(Color.RED, [200,200])
+    await wait(1000)
+
+#The volume of the speaker
+async def volume():
+    hub.speaker.volume(20)
+    await wait(1000)
+    hub.speaker.volume(40)
+    await wait(1000)
+    hub.speaker.volume(60)
+    await wait(1000)
+
+#Play the notes
+async def noise():
+    hub.speaker.beep(100, 100)
+
+#Main Program
+async def main():
+    await multitask(colors(), volume(), noise())
+
+#Run the task
+run_task(main())
