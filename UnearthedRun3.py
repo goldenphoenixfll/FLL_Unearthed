@@ -14,19 +14,14 @@ robot = DriveBase(left_motor=lsm,right_motor=rsm,wheel_diameter=62.4,axle_track=
 robot.use_gyro(True)
 
 # The Run
-robot.settings(straight_speed=600)
-robot.straight(300)
-robot.turn(180)
-robot.straight(-655)
-robot.turn(-90)
-robot.settings(straight_speed=100)
-robot.straight(150)
-rlm.run_angle(speed=100,rotation_angle=260)
-llm.run_angle(speed=-70,rotation_angle=40)
-wait(500)
-robot.straight(-150)
-llm.run_angle(speed=977,rotation_angle=-100)
-robot.turn(90)
+robot.settings(straight_speed=500)
+# Go into the boat
+robot.straight(500)
+# Pull sand off of the boat
+robot.straight(-200)
+robot.settings(straight_speed=300)
+# Push the boat up and deliver a flag
+robot.straight(430)
+# Go back to base
 robot.settings(straight_speed=977)
-robot.straight(900)
- 
+robot.straight(-500)
