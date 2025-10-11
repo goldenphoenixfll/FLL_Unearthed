@@ -21,7 +21,9 @@ robot.straight(500)
 robot.straight(-200)
 robot.settings(straight_speed=300)
 # Push the boat up and deliver a flag
-robot.straight(430)
+robot.straight(300)
 # Go back to base
+robot.use_gyro(False)
 robot.settings(straight_speed=977)
-robot.straight(-500)
+robot.turn(15,then=Stop.NONE)
+robot.straight(-600)
