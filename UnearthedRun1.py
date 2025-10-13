@@ -13,26 +13,26 @@ rsm = Motor(Port.E,Direction.CLOCKWISE)
 robot = DriveBase(left_motor=lsm,right_motor=rsm,wheel_diameter=62.4,axle_track=128.5)
 robot.use_gyro(True)
 
+
 #The Run
 robot.settings(straight_speed=480)
 # Knock down one of the grass
-robot.straight(600)
-wait(500)
+robot.straight(650)
 # Grab brush and knock out the other grass
-robot.straight(-650)
+wait(500)
+robot.straight(-620)
 # Wait to align the robot
-wait(4000)
+wait(500)
 #The Other Run
 robot.settings(straight_speed=450)
-# Set the attachment down so it can grab stuff
-rlm.run_angle(speed=500,rotation_angle=-310)
 # Come closer to the mission model
-robot.straight(700)
-# Face the mission model
-robot.turn(-39)
+robot.straight(200)
+robot.turn(20)
+robot.straight(550)
+robot.turn(-70)
 # Push two landmass
-robot.straight(170)
-# Pick up item
+robot.settings(straight_speed=300)
+robot.straight(300)
 rlm.run_angle(speed=200,rotation_angle=350)
 # Go back to base
 robot.settings(straight_speed=977)
