@@ -39,24 +39,3 @@ robot.settings(straight_speed=977)
 robot.straight(-140,then=Stop.NONE)
 robot.turn(60,then=Stop.NONE)
 robot.straight(-800)
-
-
-
-
-#Original Code
-'''robot.settings(straight_speed=450)
-robot.straight(650)
-robot.turn(-35)
-robot.straight(60)
-rlm.run_angle(speed=500,rotation_angle=-310)
-robot.straight(60)
-rlm.run_angle(speed=200,rotation_angle=550)
-robot.straight(-110)
-robot.turn(-55)
-robot.use_gyro(False)
-robot.straight(135)
-llm.run_angle(speed=300,rotation_angle=-550)
-llm.run_angle(speed=280,rotation_angle=550)
-robot.settings(straight_speed=977)
-robot.arc(radius=-100,angle=-180,then=Stop.NONE)
-#robot.straight(-500)'''
