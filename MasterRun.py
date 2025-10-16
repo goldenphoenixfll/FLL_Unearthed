@@ -18,13 +18,13 @@ robot.use_gyro(True)
 run_number = 1
 max_run = 3
 
-'''
+
 
 async def subtask2():
     await multitask(
         lsm.run_angle(500, 720),
         rsm.run_angle(500, -720),
-    )'''
+    )
 
 async def run1():
     await wait(0)
