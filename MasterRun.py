@@ -18,7 +18,7 @@ robot.use_gyro(True)
 
 # Initialize variables.
 run_number = 1
-max_run = 3
+max_run = 4
 
 async def subtask():
     await robot.straight(500)
@@ -32,29 +32,49 @@ async def subtask2():
     )
 
 async def run2():
-    await wait(0)
-    robot.settings(straight_speed=950)
-    llm.control.limits(acceleration=2000)
-    rsm.control.limits(acceleration=2000)
-    robot.use_gyro(True)
-    robot.reset(0, 0)
-    hub.imu.reset_heading(0)
-    print(hub.battery.voltage())
-    await wait(50)
-    await hub.speaker.beep(500, 1000)
-    await multitask(
-        subtask(),
-        subtask2(),
-    )
+    # The Run
+    robot.settings(straight_speed=500)
+# Go into the boat
+    robot.straight(490)
+# Pull sand off of the boat
+    robot.straight(-210)
+    robot.settings(straight_speed=240)
+# Push the boat up and deliver a flag
+    robot.straight(310)
+# Go back to base
+    robot.use_gyro(False)
+    robot.settings(straight_speed=977)
+    robot.turn(20,then=Stop.NONE)
+    robot.straight(-650)
     robot.straight(0)
 
 async def run1():
-    await wait(0)
-    await hub.speaker.beep(500, 1000)
-    for count in range(4):
-        await wait(0)
-        await robot.turn(90)
-        await robot.straight(100)
+    #The Run
+    robot.settings(straight_speed=480)
+# Knock down one of the grass
+    robot.straight(600)
+    wait(500)
+# Grab brush and knock out the other grass
+    robot.straight(-650)
+# Wait to align the robot
+    wait(4000)
+#The Other Run
+    robot.settings(straight_speed=450)
+# Set the attachment down so it can grab stuff
+    rlm.run_angle(speed=500,rotation_angle=-310)
+# Come closer to the mission model
+    robot.straight(700)
+# Face the mission model
+    robot.turn(-39)
+# Push two landmass
+    robot.straight(170)
+# Pick up item
+    rlm.run_angle(speed=200,rotation_angle=350)
+# Go back to base
+    robot.settings(straight_speed=977)
+    robot.straight(-140,then=Stop.NONE)
+    robot.turn(60,then=Stop.NONE)
+    robot.straight(-800)
     robot.stop()
 
 async def run3():
