@@ -97,7 +97,7 @@ async def main():
 
 while True:
 
-        hub.display.number(number=current + 1)
+        hub.display.number(number= current + 1)
 
 if hub.button.left.is_pressed():
 
