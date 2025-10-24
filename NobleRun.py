@@ -57,7 +57,6 @@ robot.straight(-800)
 
 
 async def run2():
-    await wait(0)
     robot.settings(straight_speed=600)
     robot.straight(300)
     robot.turn(180)
@@ -89,27 +88,45 @@ async def run3():
     robot.turn(15,then=Stop.NONE)
     robot.straight(-600)
 
+async def run4():
+    robot.use_gyro(True)
+    robot.settings(straight_speed=500)
+    #rlm.run_angle(speed=1500,rotation_angle=300)
+    robot.straight(1075)
+    robot.turn(90)
+    robot.straight(100)
+    robot.turn(-15)
+    rlm.run_angle(speed=1500,rotation_angle=1000)
+    robot.turn(33)
+    robot.settings(straight_speed=300)
+    robot.straight(-190)
+    #robot.turn(45)
+    robot.straight(135)
+    robot.turn(-90)
+    robot.settings(straight_speed=977)
+    robot.straight(800)
+
 async def main():
 
-    runs = [run1, run2, run3]
+    runs = [run1, run2, run3, run4]
 
     current = 0
 
-while True:
+    while True:
 
         hub.display.number(number= current + 1)
 
-if hub.button.left.is_pressed():
+    if hub.button.left.is_pressed():
+    
+        current = (current - 1) % len(runs)
 
-    current = (current - 1) % len(runs)
+    elif hub.button.right.is_pressed():
 
-elif hub.button.right.is_pressed():
+        current = (current + 1) % len(runs)
 
-    current = (current + 1) % len(runs)
+    elif hub.button.center.is_pressed():
 
-elif hub.button.center.is_pressed():
-
-    runs[current]()
+        runs[current]()
 
 
 run_task(main())

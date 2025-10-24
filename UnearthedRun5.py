@@ -4,7 +4,7 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
-# Setup everything
+#Setup everything
 hub = PrimeHub()
 llm = Motor(Port.B)
 rlm = Motor(Port.F)
@@ -13,18 +13,26 @@ rsm = Motor(Port.E,Direction.CLOCKWISE)
 robot = DriveBase(left_motor=lsm,right_motor=rsm,wheel_diameter=62.4,axle_track=128.5)
 robot.use_gyro(True)
 
-# The Run
-robot.settings(straight_speed=500)
-# Go into the boat
+#The Run
+'''llm.run_angle(speed=350,rotation_angle=-500)
+llm.run_angle(speed=200,rotation_angle=500)'''
+robot.settings(straight_speed=400)
 robot.straight(500)
-# Pull sand off of the boat
-robot.straight(-200)
-robot.settings(straight_speed=100)
-robot.use_gyro(False)
-robot.settings(150)
-# Push the boat up and deliver a flag
-robot.straight(260)
-# Go back to base
-robot.settings(straight_speed=200)
-robot.turn(15,then=Stop.NONE)
-robot.straight(-700)
+robot.turn(-25)
+robot.straight(150)
+robot.turn(25)
+robot.straight(45)
+robot.turn(-23)
+robot.turn(25)
+robot.straight(-90)
+robot.turn(36)
+llm.run_angle(speed=350,rotation_angle=-500)
+robot.straight(200)
+llm.run_angle(speed=200,rotation_angle=500)
+robot.turn(20)
+wait(500)
+robot.settings(turn_rate=20,straight_speed=977)
+robot.turn(-23)
+robot.straight(-150)
+robot.turn(-45)
+robot.straight(-600)
