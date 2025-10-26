@@ -16,77 +16,79 @@ robot.use_gyro(True)
 
 # Initialize variables.
 run_number = 1
-max_run = 3
+max_run = 5
 
 
-
-async def subtask2():
-    await multitask(
-        lsm.run_angle(500, 720),
-        rsm.run_angle(500, -720),
-    )
 
 async def run1():
-    await wait(0)
-robot.use_gyro(True)
-robot.settings(straight_speed=480)
-# Knock down one of the grass
-robot.straight(600)
-wait(500)
-# Grab brush and knock out the other grass
-robot.straight(-650)
-# Wait to align the robot
-wait(4000)
-#The Other Run
-robot.settings(straight_speed=450)
-# Set the attachment down so it can grab stuff
-rlm.run_angle(speed=500,rotation_angle=-310)
-# Come closer to the mission model
-robot.straight(700)
-# Face the mission model
-robot.turn(-39)
-# Push two landmass
-robot.straight(170)
-# Pick up item
-rlm.run_angle(speed=200,rotation_angle=350)
-# Go back to base
-robot.settings(straight_speed=977)
-robot.straight(-140,then=Stop.NONE)
-robot.turn(60,then=Stop.NONE)
-robot.straight(-800)
+    robot.use_gyro(True)
+    #The Run
+    robot.settings(straight_speed=480)
+    # Knock down one of the grass
+    robot.straight(650)
+    # Grab brush and knock out the other grass  
+    wait(500)
+    robot.straight(-620)
+    # Wait to align the robot
+    wait(500)
+    #The Other Run
+    robot.settings(straight_speed=450)
+    # Come closer to the mission model
+    robot.straight(200)
+    robot.turn(20)
+    robot.straight(550)
+    robot.turn(-70)
+    # Push two landmass
+    robot.settings(straight_speed=300)
+    robot.straight(300)
+    rlm.run_angle(speed=200,rotation_angle=350)
+    # Go back to base
+    robot.settings(straight_speed=977)
+    robot.straight(-140,then=Stop.NONE)
+    robot.turn(60,then=Stop.NONE)
+    robot.straight(-800)
 
 
 async def run2():
-    robot.settings(straight_speed=600)
+    # The Run
+    robot.settings(straight_speed=450,turn_rate=100)
     robot.straight(300)
     robot.turn(180)
     robot.straight(-655)
     robot.turn(-90)
     robot.settings(straight_speed=100)
-    robot.straight(150)
-    rlm.run_angle(speed=100,rotation_angle=260)
-    llm.run_angle(speed=-70,rotation_angle=40)
+    robot.straight(155)
+    rlm.run_angle(speed=100,rotation_angle=250)
     wait(500)
-    robot.straight(-150)
-    llm.run_angle(speed=977,rotation_angle=-100)
-    robot.turn(90)
-    robot.settings(straight_speed=977)
+    rlm.run_angle(speed=-200,rotation_angle=250)
+    llm.run_angle(speed=70,rotation_angle=-60)
+    wait(1000)
+    robot.straight(-140)
+    llm.run_angle(speed=977,rotation_angle=-200)
+    robot.turn(40)
+    rlm.run_angle(speed=500,rotation_angle=300)
+    robot.settings(straight_speed=977,turn_rate=500)
+    robot.turn(50)
     robot.straight(900)
 
+
 async def run3():
+    # The Run
     robot.settings(straight_speed=500)
     # Go into the boat
-    robot.straight(490)
+    robot.straight(500)
     # Pull sand off of the boat
     robot.straight(-200)
-    robot.settings(straight_speed=300)
-    # Push the boat up and deliver a flag
-    robot.straight(280)
-    # Go back to base
+    robot.settings(straight_speed=100)
     robot.use_gyro(False)
-    robot.settings(straight_speed=977)
+    robot.settings(150)
+    # Push the boat up and deliver a flag
+    robot.straight(260)
+    # Go back to base
+    robot.settings(straight_speed=200)
     robot.turn(15,then=Stop.NONE)
-    robot.straight(-600)
+    robot.straight(-700)
+
 
 async def run4():
     robot.use_gyro(True)
@@ -116,17 +118,17 @@ async def main():
 
         hub.display.number(number= current + 1)
 
-    if hub.button.left.is_pressed():
+if hub.button.left.is_pressed():
     
-        current = (current - 1) % len(runs)
+    current = (current - 1) % len(runs)
 
-    elif hub.button.right.is_pressed():
+elif hub.button.right.is_pressed():
 
-        current = (current + 1) % len(runs)
+    current = (current + 1) % len(runs)
 
-    elif hub.button.center.is_pressed():
+elif hub.button.center.is_pressed():
 
-        runs[current]()
+    runs[current]()
 
 
 run_task(main())
