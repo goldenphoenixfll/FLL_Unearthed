@@ -13,36 +13,35 @@ robot = DriveBase(left_motor=lsm,right_motor=rsm,wheel_diameter=62.4,axle_track=
 robot.use_gyro(True)
 
 
-def run1():
-    robot.use_gyro(True)
-    ##The Run
-    robot.settings(straight_speed=480)
-    ## Knock down one of the grass
-    robot.straight(650)
-    ## Grab brush and knock out the other grass
-    wait(500)
-    robot.straight(-620)
-    ## Wait to align the robot 
-    wait(500)
-    ##The Other Run
-    robot.settings(straight_speed=450)
-    ## Come closer to the mission model
-    robot.straight(200)
-    robot.turn(20)
-    robot.straight(550)
-    robot.turn(-70)
-    ## Push two landmass
-    robot.settings(straight_speed=300)
-    robot.straight(300)
-    rlm.run_angle(speed=200,rotation_angle=350)
-    ## Go back to base
-    robot.settings(straight_speed=977)
-    robot.straight(-140,then=Stop.NONE)
-    robot.turn(47,then=Stop.NONE)
-    robot.use_gyro(False)
-    robot.straight(-800)
+async def run1():
+    await robot.use_gyro(True)
+    #await #The Run
+    await robot.settings(straight_speed=480)
+    #await # Knock down one of the grass
+    await robot.straight(650)
+    #await # Grab brush and knock out the other grass
+    await wait(500)
+    await robot.straight(-620)
+    #await # Wait to align the robot 
+    await wait(500)
+    #await #The Other Run
+    await robot.settings(straight_speed=450)
+    #await # Come closer to the mission model
+    await robot.straight(200)
+    await robot.turn(20)
+    await robot.straight(550)
+    await robot.turn(-70)
+    #await # Push two landmass
+    await robot.settings(straight_speed=300)
+    await robot.straight(300)
+    await rlm.run_angle(speed=200,rotation_angle=350)
+    #await # Go back to base
+    await robot.settings(straight_speed=977)
+    await robot.straight(-140,then=Stop.NONE)
+    await robot.turn(60,then=Stop.NONE)
+    await robot.straight(-800)
 
-def run2():
+async def run2():
     robot.use_gyro(True)
     # The Run
     robot.settings(straight_speed=450,turn_rate=100)
@@ -63,10 +62,9 @@ def run2():
     rlm.run_angle(speed=500,rotation_angle=300)
     robot.settings(straight_speed=977,turn_rate=500)
     robot.turn(50)
-    robot.use_gyro(False)
     robot.straight(900)
 
-def run3():
+async def run3():
     robot.use_gyro(True)
     # The Run
     robot.settings(straight_speed=500)
@@ -82,10 +80,9 @@ def run3():
     # Go back to base
     robot.settings(straight_speed=200)
     robot.turn(15,then=Stop.NONE)
-    robot.use_gyro(False)
     robot.straight(-700)
-    
-def run4():
+
+async def run4():
     robot.use_gyro(True)
     robot.settings(straight_speed=500)
     #rlm.run_angle(speed=1500,rotation_angle=300)
@@ -108,10 +105,9 @@ def run4():
     robot.straight(-20)
     llm.run_angle(speed=500,rotation_angle=-200)
     robot.turn(55)
-    robot.use_gyro(False)
     robot.straight(600)
 
-def run5():
+async def run5():
     robot.use_gyro(True)
     robot.settings(straight_speed=400)
     robot.straight(500)
@@ -133,57 +129,30 @@ def run5():
     robot.straight(-150)
     robot.settings(turn_rate=20,straight_speed=977)
     robot.turn(-45)
-    robot.use_gyro(False)
     robot.straight(-600)
 
-def run6():
-    robot.settings(straight_speed=400, turn_rate=30)
-    robot.straight(150) 
-    robot.turn(-40)
-    rlm.run_angle(speed=600,rotation_angle=-250)
-    robot.straight(767)
-    rlm.run_angle(speed=600,rotation_angle=250)
-    robot.straight(-80)
-    robot.settings(turn_rate=67)
-    robot.turn(-45)
-    robot.straight(239)
-    robot.turn(40)
-    robot.settings(straight_speed=700)
-    robot.straight(-260)
-    wait(200)
-    robot.straight(225)
-    robot.settings(straight_speed=400)
-    robot.turn(-45)
-    robot.straight(280)
-    robot.turn(-45)
-    rlm.run_angle(speed=600,rotation_angle=-467)
-    robot.straight(167)
-    llm.run_angle(200,500)
-    rlm.run_angle(speed=600,rotation_angle=250)
-    robot.straight(-167)
-
     # Initialize variables.
-runs = [run1, run2, run3, run4, run5, run6]
+runs = [run1, run2, run3, run4, run5]
 current = 0
 
-def main():
+async def main():
     global current #current run
     hub.display.number(current+1)
     hub.system.set_stop_button(Button.BLUETOOTH)
-    wait(50)
+    await wait(50)
     while True:
         hub.display.number(number=current + 1)
         while not any(hub.buttons.pressed()):
-            wait(0)
+            await wait(0)
         if Button.LEFT in hub.buttons.pressed():
             current = (current - 1) % len(runs)
         elif Button.RIGHT in hub.buttons.pressed():
             current = (current + 1) % len(runs)
         elif Button.CENTER in hub.buttons.pressed():
             print(f"now running {runs[current]=}")
-            runs[current]()
+            await runs[current]()
             print(f"done task {current=}")
-        wait(240)
+        await wait(240)
 
 
 run_task(main())

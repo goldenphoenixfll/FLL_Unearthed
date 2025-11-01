@@ -37,5 +37,5 @@ rlm.run_angle(speed=200,rotation_angle=350)
 # Go back to base
 robot.settings(straight_speed=977)
 robot.straight(-140,then=Stop.NONE)
-robot.turn(60,then=Stop.NONE)
+robot.turn(47,then=Stop.NONE)
 robot.straight(-800)
